@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './News.module.css'
 import NewsItem from '../NewsItem/NewsItem';
 import { supabase } from '../../supabase'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function News() {
     const [data, setData] = useState([]);
