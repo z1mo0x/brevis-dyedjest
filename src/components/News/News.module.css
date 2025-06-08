@@ -1,0 +1,10 @@
+.news h1 {
+    text-align: center;
+    font-weight: 700;
+}
+
+.news__list {
+    padding-left: 0;
+    display: grid;
+    gap: 15px;
+}

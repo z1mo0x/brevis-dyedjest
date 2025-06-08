@@ -1,0 +1,67 @@
+.form {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 150px;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+}
+
+.form__input {
+    padding: 10px 20px;
+    font-family: 'Shantell Sans';
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea.form__input {
+    height: 150px;
+}
+
+.form__decline .form__input {
+    border: 1px solid red;
+}
+
+.form__decline .form__select {
+    border: 1px solid red;
+}
+
+.form__title {
+    font-size: 30px;
+    text-align: center;
+}
+
+.form__button {
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: #A0BC00;
+    font-weight: 700;
+    color: white;
+    font-size: 16px;
+    transition: all .3s;
+    padding: 15px 40px;
+    width: max-content;
+    font-family: 'Shantell Sans';
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.form__button:hover {
+    color: #A0BC00;
+    letter-spacing: 2px;
+    font-weight: 900;
+    background: white;
+    border: 1px solid #A0BC00;
+}
+
+.form__select {
+    width: 500px;
+    padding: 10px 20px;
+    font-family: 'Shantell Sans';
+    font-size: 18px;
+}
+
+.form__select option:nth-child(1) {
+    display: none;
+}
