@@ -25,6 +25,7 @@
 .item__descr {
     margin-top: 25px;
     font-size: 18px;
+    padding-bottom: 20px;
 }
 
 .item__date {
@@ -33,6 +34,16 @@
     text-align: right;
     margin-top: 10px;
     position: absolute;
-    top: 0;
+    bottom: 10px;
     right: 20px;
+}
+
+.item__user {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #A0BC00;
+    padding: 5px 10px;
+    border-radius: 0 10px 0 0;
+    color: white;
 }

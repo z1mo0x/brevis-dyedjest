@@ -7,6 +7,7 @@ export default function NewsItem({ id, title, description, user, type, created_a
 
     return (
         <div className={styles.item}>
+            <div className={styles.item__user}>Андрей</div>
             <div className={styles.item__type}>
                 {title + ' #' + id}
             </div>
