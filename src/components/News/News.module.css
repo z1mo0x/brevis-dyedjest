@@ -9,4 +9,25 @@
     gap: 15px;
 }
 
-.button__add {}
+.button__add {
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: #A0BC00;
+    font-weight: 700;
+    color: white;
+    font-size: 16px;
+    transition: all .3s;
+    padding: 15px 40px;
+    width: max-content;
+    font-family: 'Shantell Sans';
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.button__add:hover {
+    color: #A0BC00;
+    letter-spacing: 2px;
+    font-weight: 900;
+    background: white;
+    border: 1px solid #A0BC00;
+}
