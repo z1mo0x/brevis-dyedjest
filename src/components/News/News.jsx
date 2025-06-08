@@ -16,7 +16,7 @@ export default function News() {
         const { data, error } = await supabase
             .from('news')
             .select()
-            .order('created_at', { ascending: true })
+            .order('created_at', { ascending: false })
 
 
         if (error) {
