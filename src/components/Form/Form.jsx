@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Form.module.css'
 import { supabase } from '../../supabase'
+import { NavLink } from 'react-router-dom';
 
 export default function Form() {
 
@@ -12,6 +13,7 @@ export default function Form() {
     const [user, setUser] = useState('')
     const [typeTitle, setTypeTitle] = useState('')
     const [validation, setValidation] = useState(false)
+    const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         fetchData();
@@ -54,9 +56,8 @@ export default function Form() {
         if (error) {
             console.error('Ошибка при вставке данных:', error.message);
         } else {
+            setSuccess(true)
             console.log('Данные успешно добавлены:', data);
-            // Возможно, вы хотите обновить состояние или перезагрузить данные
-            // await fetchData(); // Если нужно обновить список новостей
         }
 
         setLoading(false);
@@ -70,7 +71,17 @@ export default function Form() {
                     ?
                     'загрузка...'
                     :
+
                     <form className={`${styles.form} ${validation ? styles.form__decline : ''} `}>
+                        {
+                            success
+                                ?
+                                <div className={styles.form__success}>
+                                    Успешно отправлено, <NavLink to="/">можешь проверить свою новость</NavLink>
+                                </div>
+                                :
+                                ''
+                        }
                         <div className={styles.form__title}>{validation ? 'Заполните все поля! (дада, выделены все  поля, не хватило времени на нормальную валидацию!)' : 'Запостить новость'}</div>
                         <input type="text" className={styles.form__input} placeholder='Кто пишет? Кто ты воин?' onChange={(e) => { setUser(e.target.value) }} />
                         <textarea type="text" className={styles.form__input} placeholder='Что опять произошло в офисе?'
@@ -94,9 +105,8 @@ export default function Form() {
                                     </option>)
                             })}
                         </select>
-                        <div>{type}</div>
-                        <button className={styles.form__button} onClick={(e) => {
-                            if (type !== '' && user !== '' && descr !== '') {
+                        <button type='button' className={styles.form__button} onClick={(e) => {
+                            if (type !== '' && user.trim() !== '' && descr.trim() !== '') {
                                 pushData()
                             }
                             else {
@@ -108,7 +118,7 @@ export default function Form() {
                         }>
                             Выложить новость
                         </button>
-                    </form>
+                    </form >
             }
 
         </>

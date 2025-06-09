@@ -47,3 +47,19 @@
     border-radius: 0 10px 0 0;
     color: white;
 }
+
+@media (max-width:577px) {
+    .item__user {
+        top: -28px;
+        left: 0;
+        right: unset;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .item__type {
+        font-size: 14px;
+        width: 100%;
+        border-radius: 0 10px 0 0;
+        text-align: center;
+    }
+}

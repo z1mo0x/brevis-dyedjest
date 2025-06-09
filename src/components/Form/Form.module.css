@@ -56,7 +56,6 @@ textarea.form__input {
 }
 
 .form__select {
-    width: 500px;
     padding: 10px 20px;
     font-family: 'Shantell Sans';
     font-size: 18px;
@@ -64,4 +63,19 @@ textarea.form__input {
 
 .form__select option:nth-child(1) {
     display: none;
+}
+
+.form__success {
+    color: #A0BC00;
+    text-align: center;
+}
+
+.form__success a {
+    color: #A0BC00;
+}
+
+@media (max-width:577px) {
+    .form {
+        width: 100%;
+    }
 }

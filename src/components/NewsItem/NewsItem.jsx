@@ -12,7 +12,7 @@ export default function NewsItem({ id, title, description, user, type, created_a
                 {title + ' #' + id}
             </div>
             <div className={styles.item__descr}>{description}</div>
-            <div className={styles.item__date}> {newDate + ' ' + newTime}</div>
+            <div className={styles.item__date}> {newTime + ' ' + newDate}</div>
         </div>
     )
 }
