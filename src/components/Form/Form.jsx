@@ -36,11 +36,6 @@ export default function Form() {
     const pushData = async (e) => {
         // e.preventDefault();
         setLoading(true);
-
-        console.log('Описание:', descr);
-        console.log('Заголовок:', typeTitle);
-        console.log('Тип:', type);
-
         const { data, error } = await supabase
             .from('news')
             .insert([
