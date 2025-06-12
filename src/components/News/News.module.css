@@ -40,6 +40,25 @@
     border: 1px solid #A0BC00;
 }
 
+.button__filter {
+    padding: 10px 20px;
+    font-family: 'Shantell Sans';
+    font-size: 18px;
+    border: 1px solid #A0BC00;
+    background: #A0BC00;
+    color: white;
+    border-radius: 10px;
+}
+
+
+.button__filter option {
+    background: white;
+    color: black;
+}
+
+.button__filter option:nth-child(1) {
+    display: none;
+}
 
 
 @media (max-width:577px) {
