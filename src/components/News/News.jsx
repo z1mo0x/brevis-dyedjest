@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './News.module.css'
 import NewsItem from '../NewsItem/NewsItem';
 import { supabase } from '../../supabase'
@@ -9,11 +9,33 @@ export default function News() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [sortedByLikes, setSortedByLikes] = useState(false);
-
+    const listRef = useRef(null); // === 2 ===
 
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (!listRef.current) return;
+
+        const observer = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(styles.animate); // === 3 === добавляем класс анимации
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 1 }
+        );
+
+        const elements = listRef.current.querySelectorAll(`.${styles.animateOnScroll}`); // === 4 === ищем элементы с классом для анимации
+        elements.forEach(el => observer.observe(el));
+        console.log(listRef.current.querySelectorAll(`.${styles.animateOnScroll}`));
+        return () => observer.disconnect();
+    }, [data, sortedByLikes]);
+
 
     function getWeekRange(date) {
         const day = date.getDay(); // 0 (вс), 1 (пн), ..., 6 (сб)
@@ -73,9 +95,9 @@ export default function News() {
                 <option value="likes">Популярнее</option>
                 <option value="date">Новее</option>
             </select>
-            <ul className={styles.news__list}>
+            <ul ref={listRef} className={styles.news__list}>
                 {displayedData.map((item) => (
-                    <NewsItem key={item.id} id={item.id} likes={item.likes} title={item.title} type={item.type} description={item.description} user={item.user} created_at={item.created_at} />
+                    <NewsItem className={styles.animateOnScroll} key={item.id} id={item.id} likes={item.likes} title={item.title} type={item.type} description={item.description} user={item.user} created_at={item.created_at} />
                 ))}
             </ul>
         </div>

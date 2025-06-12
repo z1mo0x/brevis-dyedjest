@@ -1,6 +1,8 @@
+:root {
+    --bg-color: white;
+}
+
 .card {
-    /* color used to softly clip top and bottom of the .words container */
-    --bg-color: #111;
     background-color: white;
     padding: 1rem 2rem;
     border-radius: 1.25rem;
@@ -33,6 +35,10 @@
 .words::after {
     content: "";
     position: absolute;
+    background: linear-gradient(var(--bg-color) 10%,
+            transparent 30%,
+            transparent 70%,
+            var(--bg-color) 90%);
     inset: 0;
     z-index: 20;
 }

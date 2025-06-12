@@ -4,7 +4,7 @@ import iconLikeActive from '../../assets/hearts_active.svg'
 import { useEffect, useState } from 'react'
 import { supabase } from '../../supabase'
 
-export default function NewsItem({ id, title, description, user, type, created_at, likes }) {
+export default function NewsItem({ className, id, title, description, user, type, created_at, likes }) {
 
     let newDate = created_at.split('T')[0]
     let newTime = created_at.split('T')[1].slice(0, 8)
@@ -85,7 +85,7 @@ export default function NewsItem({ id, title, description, user, type, created_a
     }
 
     return (
-        <div className={styles.item}>
+        <div className={`${styles.item} ${className}`}>
             <div className={styles.item__user}>{user || 'Неизвестный'}</div>
             <div className={styles.item__type}>
                 {title + ' #' + id}
