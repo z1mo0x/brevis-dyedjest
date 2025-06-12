@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './Form.module.css'
 import { supabase } from '../../supabase'
 import { NavLink } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 export default function Form() {
 
@@ -64,7 +65,7 @@ export default function Form() {
             {
                 loading
                     ?
-                    'загрузка...'
+                    <Loader />
                     :
 
                     <form className={`${styles.form} ${validation ? styles.form__decline : ''} `}>
