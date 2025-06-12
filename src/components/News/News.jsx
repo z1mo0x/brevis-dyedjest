@@ -3,6 +3,7 @@ import styles from './News.module.css'
 import NewsItem from '../NewsItem/NewsItem';
 import { supabase } from '../../supabase'
 import { NavLink } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 export default function News() {
     const [data, setData] = useState([]);
@@ -60,7 +61,7 @@ export default function News() {
         : data;
 
 
-    if (loading) return <div>Загрузка...</div>;
+    if (loading) return <Loader />;
 
     return (
         <div className={styles.news}>
