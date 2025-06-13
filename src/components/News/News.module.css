@@ -32,7 +32,7 @@
     text-decoration: none;
 }
 
-.button__add:hover {
+kb .button__add:hover {
     color: #A0BC00;
     letter-spacing: 2px;
     font-weight: 900;
