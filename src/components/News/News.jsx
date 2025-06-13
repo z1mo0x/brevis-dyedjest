@@ -78,9 +78,8 @@ export default function News() {
         }
     };
 
-    const displayedData = sortedByLikes ? [...data].sort((a, b) => b.likes - a.likes) : data.;
-
     const mostLiked = [...data].sort((a, b) => b.likes - a.likes)[0];
+    const displayedData = sortedByLikes ? [...data].sort((a, b) => b.likes - a.likes) : data.filter(obj => obj.id !== mostLiked.id);
 
     console.log(mostLiked);
 
