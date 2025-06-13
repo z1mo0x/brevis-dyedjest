@@ -32,7 +32,6 @@ export default function News() {
 
         const elements = listRef.current.querySelectorAll(`.${styles.animateOnScroll}`); // === 4 === ищем элементы с классом для анимации
         elements.forEach(el => observer.observe(el));
-        console.log(listRef.current.querySelectorAll(`.${styles.animateOnScroll}`));
         return () => observer.disconnect();
     }, [data, sortedByLikes]);
 
@@ -79,9 +78,9 @@ export default function News() {
     };
 
     const mostLiked = [...data].sort((a, b) => b.likes - a.likes)[0];
+
     const displayedData = sortedByLikes ? [...data].sort((a, b) => b.likes - a.likes) : data.filter(obj => obj.id !== mostLiked.id);
 
-    console.log(mostLiked);
 
     if (loading) return <Loader />;
 
