@@ -72,7 +72,20 @@
     transform: translateX(0);
 }
 
+.popular {
+    margin-top: 30px;
+}
 
+.popular__title span {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: #A0BC00;
+}
+
+.popular .popular__item {
+    margin-top: 30px;
+}
 
 @media (max-width:577px) {
     .news {

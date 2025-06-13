@@ -78,10 +78,11 @@ export default function News() {
         }
     };
 
-    const displayedData = sortedByLikes
-        ? [...data].sort((a, b) => b.likes - a.likes)
-        : data;
+    const displayedData = sortedByLikes ? [...data].sort((a, b) => b.likes - a.likes) : data.;
 
+    const mostLiked = [...data].sort((a, b) => b.likes - a.likes)[0];
+
+    console.log(mostLiked);
 
     if (loading) return <Loader />;
 
@@ -95,6 +96,12 @@ export default function News() {
                 <option value="likes">Популярнее</option>
                 <option value="date">Новее</option>
             </select>
+
+            <div className={styles.popular}>
+                <h2 className={styles.popular__title}>Самый популярный пост пренадлежит <span>{mostLiked.user}</span></h2>
+                <NewsItem className={styles.popular__item} key={mostLiked.id} id={mostLiked.id} likes={mostLiked.likes} title={mostLiked.title} type={mostLiked.type} description={mostLiked.description} user={mostLiked.user} created_at={mostLiked.created_at} />
+            </div>
+
             <ul ref={listRef} className={styles.news__list}>
                 {displayedData.map((item) => (
                     <NewsItem className={styles.animateOnScroll} key={item.id} id={item.id} likes={item.likes} title={item.title} type={item.type} description={item.description} user={item.user} created_at={item.created_at} />
