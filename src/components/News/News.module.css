@@ -1,5 +1,6 @@
 .news {
     margin-top: 100px;
+    overflow: hidden;
 }
 
 .news h1 {

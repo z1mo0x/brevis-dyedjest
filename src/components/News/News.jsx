@@ -27,7 +27,7 @@ export default function News() {
                     }
                 });
             },
-            { threshold: 1 }
+            { threshold: .3 }
         );
 
         const elements = listRef.current.querySelectorAll(`.${styles.animateOnScroll}`); // === 4 === ищем элементы с классом для анимации
