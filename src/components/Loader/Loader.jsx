@@ -11,6 +11,8 @@ export default function Loader() {
                     <span className={styles.word}>Лайков</span>
                     <span className={styles.word}>Текста</span>
                     <span className={styles.word}>Кнопок</span>
+                    <span className={styles.word}>Фраз</span>
+                    <span className={styles.word}>Стилей</span>
                 </div>
             </div>
         </div>
