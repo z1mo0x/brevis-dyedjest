@@ -96,7 +96,7 @@ export default function News() {
             </select>
 
             <div className={styles.popular}>
-                <h2 className={styles.popular__title}>Самый популярный пост пренадлежит <span>{mostLiked.user}</span></h2>
+                <h2 className={styles.popular__title}>Самый популярный пост принадлежит <span>{mostLiked.user}</span></h2>
                 <NewsItem className={styles.popular__item} key={mostLiked.id} id={mostLiked.id} likes={mostLiked.likes} title={mostLiked.title} type={mostLiked.type} description={mostLiked.description} user={mostLiked.user} created_at={mostLiked.created_at} />
             </div>
 
