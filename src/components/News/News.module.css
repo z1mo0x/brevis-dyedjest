@@ -92,9 +92,25 @@
     margin-top: 30px;
 }
 
+@media (max-width:993px) {
+    .popular__title {
+        font-size: 20px;
+    }
+}
+
 @media (max-width:577px) {
     .news {
         padding: 0 20px;
+    }
+
+    .popular__title {
+        text-align: center;
+    }
+
+    .popular__title span {
+        display: block;
+        margin: 0 auto;
+        width: max-content;
     }
 
     .news__list {
