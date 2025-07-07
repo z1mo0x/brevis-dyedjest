@@ -87,27 +87,28 @@ export default function News() {
     return (
         displayedData
             ?
-            <div className={styles.news}>
-                <h1>Дайджест недели</h1>
-                <NavLink to="/create" className={styles.button__add}>Добавить новость</NavLink>
+            'Посты есть'
+            // <div className={styles.news}>
+            //     <h1>Дайджест недели</h1>
+            //     <NavLink to="/create" className={styles.button__add}>Добавить новость</NavLink>
 
-                <select className={styles.button__filter} defaultChecked={'0'} onChange={handleFilterChange}>
-                    <option value="0">Сортировать по:</option>
-                    <option value="likes">Популярнее</option>
-                    <option value="date">Новее</option>
-                </select>
+            //     <select className={styles.button__filter} defaultChecked={'0'} onChange={handleFilterChange}>
+            //         <option value="0">Сортировать по:</option>
+            //         <option value="likes">Популярнее</option>
+            //         <option value="date">Новее</option>
+            //     </select>
 
-                <div className={styles.popular}>
-                    <h2 className={styles.popular__title}>Самый популярный пост принадлежит <span>{mostLiked.user}</span></h2>
-                    <NewsItem className={styles.popular__item} key={mostLiked.id} id={mostLiked.id} likes={mostLiked.likes} title={mostLiked.title} type={mostLiked.type} description={mostLiked.description} user={mostLiked.user} created_at={mostLiked.created_at} />
-                </div>
+            //     <div className={styles.popular}>
+            //         <h2 className={styles.popular__title}>Самый популярный пост принадлежит <span>{mostLiked.user}</span></h2>
+            //         <NewsItem className={styles.popular__item} key={mostLiked.id} id={mostLiked.id} likes={mostLiked.likes} title={mostLiked.title} type={mostLiked.type} description={mostLiked.description} user={mostLiked.user} created_at={mostLiked.created_at} />
+            //     </div>
 
-                <ul ref={listRef} className={styles.news__list}>
-                    {displayedData.map((item) => (
-                        <NewsItem className={styles.animateOnScroll} key={item.id} id={item.id} likes={item.likes} title={item.title} type={item.type} description={item.description} user={item.user} created_at={item.created_at} />
-                    ))}
-                </ul>
-            </div>
+            //     <ul ref={listRef} className={styles.news__list}>
+            //         {displayedData.map((item) => (
+            //             <NewsItem className={styles.animateOnScroll} key={item.id} id={item.id} likes={item.likes} title={item.title} type={item.type} description={item.description} user={item.user} created_at={item.created_at} />
+            //         ))}
+            //     </ul>
+            // </div>
             :
             <>
                 Постов нет, стань первым на этой неделе! <NavLink to="/create" className={styles.button__add}>Стать первым</NavLink>
