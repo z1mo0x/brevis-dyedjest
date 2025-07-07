@@ -20,7 +20,7 @@ export default function NewsItem({ className, id, title, description, user, type
     }, [id])
 
     return (
-        id ?
+        id !== '' ?
             <div className={`${styles.item} ${className}`}>
                 <div className={styles.item__user}>{user}</div>
                 <div className={styles.item__type}>
