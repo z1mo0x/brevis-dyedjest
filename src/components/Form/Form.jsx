@@ -16,6 +16,8 @@ export default function Form() {
     const [validation, setValidation] = useState(false)
     const [success, setSuccess] = useState(false)
 
+    const [imageFile, setImageFile] = useState(null);
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -37,6 +39,41 @@ export default function Form() {
     const pushData = async (e) => {
         // e.preventDefault();
         setLoading(true);
+
+        let imageUrl = null;
+
+        if (imageFile) {
+            const fileExt = imageFile.name.split('.').pop();
+            const fileName = `${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('images') // имя вашего бакета (создайте его в Supabase)
+                .upload(filePath, imageFile);
+
+            if (uploadError) {
+                console.error('Ошибка загрузки изображения:', uploadError.message);
+                setLoading(false);
+                return;
+            }
+
+            // Получаем публичный URL файла
+            const { data } = supabase.storage.from('images').getPublicUrl(filePath);
+            const publicURL = data.publicUrl;
+
+            if (!publicURL) {
+                console.error('Ошибка получения URL изображения');
+                setLoading(false);
+                return;
+            }
+
+            imageUrl = publicURL;
+
+            setTimeout(() => {
+                console.log(imageUrl);
+            }, 1000)
+        }
+
         const { data, error } = await supabase
             .from('news')
             .insert([
@@ -44,6 +81,7 @@ export default function Form() {
                     description: descr,
                     title: typeTitle,
                     type: type,
+                    imageUrl: imageUrl,
                     user: user,
                 },
             ])
@@ -101,6 +139,11 @@ export default function Form() {
                                     </option>)
                             })}
                         </select>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setImageFile(e.target.files[0])}
+                        />
                         <button type='button' className={styles.form__button} onClick={(e) => {
                             if (type !== '' && user.trim() !== '' && descr.trim() !== '') {
                                 pushData()

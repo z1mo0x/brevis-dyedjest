@@ -69,8 +69,25 @@
     background: white;
 }
 
+.item__image {
+    margin-top: 30px;
+    padding-bottom: 30px;
+    width: 500px;
+    height: 500px;
+}
 
+.item__wrap {
+    display: grid;
+    gap: 50px;
+    grid-template-columns: 500px 1fr;
+}
 
+.item__image img {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+    border-radius: 10px;
+}
 
 @media (max-width:577px) {
     .item__user {
