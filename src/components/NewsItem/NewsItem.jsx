@@ -34,7 +34,7 @@ export default function NewsItem({ className, id, title, description, image, use
                     <div className={styles.item__descr}>{description}</div>
                 </div>
                 :
-                <div className={styles.item__descr}>{description}</div>
+                <div className={styles.item__descr}>{description} {image}</div>
             }
             <div className={styles.item__like}
                 onClick={() => likePost({ id, likesCount, setLikesCount, likeActive, setLikeActive })}

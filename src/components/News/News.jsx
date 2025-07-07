@@ -142,7 +142,7 @@ export default function News() {
                         title={item.title}
                         type={item.type}
                         description={item.description}
-                        imageUrl={item.imageUrl}
+                        image={item.imageUrl}
                         user={item.user}
                         created_at={item.created_at}
                     />
