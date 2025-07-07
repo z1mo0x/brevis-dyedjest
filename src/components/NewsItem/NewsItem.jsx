@@ -20,19 +20,22 @@ export default function NewsItem({ className, id, title, description, user, type
     }, [id])
 
     return (
-        <div className={`${styles.item} ${className}`}>
-            <div className={styles.item__user}>{user || 'Неизвестный'}</div>
-            <div className={styles.item__type}>
-                {title + ' #' + id}
+        id ?
+            <div className={`${styles.item} ${className}`}>
+                <div className={styles.item__user}>{user}</div>
+                <div className={styles.item__type}>
+                    {title + ' #' + id}
+                </div>
+                <div className={styles.item__descr}>{description}</div>
+                <div className={styles.item__like}
+                    onClick={() => likePost({ id, likesCount, setLikesCount, likeActive, setLikeActive })}
+                >
+                    <img src={likeActive ? iconLikeActive : iconLike} alt="like" />
+                    {likesCount}
+                </div>
+                <div className={styles.item__date}> {newTime + ' ' + newDate}</div>
             </div>
-            <div className={styles.item__descr}>{description}</div>
-            <div className={styles.item__like}
-                onClick={() => likePost({ id, likesCount, setLikesCount, likeActive, setLikeActive })}
-            >
-                <img src={likeActive ? iconLikeActive : iconLike} alt="like" />
-                {likesCount}
-            </div>
-            <div className={styles.item__date}> {newTime + ' ' + newDate}</div>
-        </div>
+            :
+            'Постов пока нет'
     )
 }
