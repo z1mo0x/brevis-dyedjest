@@ -74,6 +74,26 @@ textarea.form__input {
     color: #A0BC00;
 }
 
+.form__file {
+    width: 100%;
+    border: 1px solid #000;
+    padding: 15px 25px;
+    font-weight: 700;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.form__file img {
+    height: 75px;
+    width: 100%;
+}
+
+.form__file input {
+    display: none;
+}
+
 @media (max-width:577px) {
     .form {
         width: 100%;

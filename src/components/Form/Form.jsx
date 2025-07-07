@@ -3,6 +3,7 @@ import styles from './Form.module.css'
 import { supabase } from '../../supabase'
 import { NavLink } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import memasForm from '../../assets/memas-form.jpeg'
 
 export default function Form() {
 
@@ -17,6 +18,8 @@ export default function Form() {
     const [success, setSuccess] = useState(false)
 
     const [imageFile, setImageFile] = useState(null);
+    const [pastedImage, setPastedImage] = useState(null);
+    const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -36,8 +39,7 @@ export default function Form() {
         setLoading(false)
     };
 
-    const pushData = async (e) => {
-        // e.preventDefault();
+    const pushData = async () => {
         setLoading(true);
 
         let imageUrl = null;
@@ -48,7 +50,7 @@ export default function Form() {
             const filePath = `${fileName}`;
 
             const { error: uploadError } = await supabase.storage
-                .from('images') // имя вашего бакета (создайте его в Supabase)
+                .from('images')
                 .upload(filePath, imageFile);
 
             if (uploadError) {
@@ -57,21 +59,16 @@ export default function Form() {
                 return;
             }
 
-            // Получаем публичный URL файла
             const { data } = supabase.storage.from('images').getPublicUrl(filePath);
-            const publicURL = data.publicUrl;
+            imageUrl = data.publicUrl;
 
-            if (!publicURL) {
+            if (!imageUrl) {
                 console.error('Ошибка получения URL изображения');
                 setLoading(false);
                 return;
             }
 
-            imageUrl = publicURL;
-
-            setTimeout(() => {
-                console.log(imageUrl);
-            }, 1000)
+            setUploadedImageUrl(imageUrl);
         }
 
         const { data, error } = await supabase
@@ -97,6 +94,28 @@ export default function Form() {
         setLoading(false);
     }
 
+    useEffect(() => {
+        function onPaste(e) {
+            const items = e.clipboardData.items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf("image") !== -1) {
+                    const blob = items[i].getAsFile();
+                    const url = URL.createObjectURL(blob);
+                    setPastedImage(url);
+                    setImageFile(blob);
+                    e.preventDefault();
+                    break;
+                }
+            }
+        }
+        document.body.addEventListener('paste', onPaste);
+        return () => {
+            document.body.removeEventListener('paste', onPaste);
+            if (pastedImage) {
+                URL.revokeObjectURL(pastedImage);
+            }
+        };
+    }, [pastedImage]);
 
     return (
         <>
@@ -121,7 +140,7 @@ export default function Form() {
                         <textarea type="text" className={styles.form__input} placeholder='Что опять произошло в офисе?'
                             onChange={(e) => { setDescr(e.target.value) }} >
                         </textarea>
-                        <select defaultValue={0} type="text" className={styles.form__select}
+                        <select defaultValue="0" type="text" className={styles.form__select}
                             onChange={(e) => {
                                 setTypeTitle(e.target.value)
                                 const selectedType = formTypes.find(el => el.type_title === e.target.value);
@@ -139,22 +158,59 @@ export default function Form() {
                                     </option>)
                             })}
                         </select>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => setImageFile(e.target.files[0])}
-                        />
-                        <button type='button' className={styles.form__button} onClick={(e) => {
+
+                        <label htmlFor="file" className={styles.form__file}>
+                            Загрузить мемчик <img src={memasForm} alt="" />
+                            <input
+                                id='file'
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        setImageFile(file);
+                                        if (pastedImage) {
+                                            URL.revokeObjectURL(pastedImage);
+                                            setPastedImage(null);
+                                        }
+                                    }
+                                }}
+                            />
+                        </label>
+
+                        {/* Превью вставленной из буфера картинки */}
+                        {pastedImage && (
+                            <div style={{ marginTop: '10px' }}>
+                                <p>Вставленное изображение:</p>
+                                <img src={pastedImage} alt="Превью вставленной картинки" style={{ maxWidth: '300px' }} />
+                            </div>
+                        )}
+
+                        {/* Превью выбранного файла из input (если нет вставленного) */}
+                        {!pastedImage && imageFile && (
+                            <div style={{ marginTop: '10px' }}>
+                                <p>Выбранное изображение:</p>
+                                <img src={URL.createObjectURL(imageFile)} alt="Превью выбранного файла" style={{ maxWidth: '300px' }} />
+                            </div>
+                        )}
+
+                        {/* Превью загруженного изображения */}
+                        {uploadedImageUrl && (
+                            <div style={{ marginTop: '10px' }}>
+                                <p>Загруженное изображение:</p>
+                                <img src={uploadedImageUrl} alt="Загруженное изображение" style={{ maxWidth: '300px' }} />
+                            </div>
+                        )}
+
+                        <button type='button' className={styles.form__button} onClick={() => {
                             if (type !== '' && user.trim() !== '' && descr.trim() !== '') {
-                                pushData()
+                                setValidation(false);
+                                pushData();
                             }
                             else {
-                                e.preventDefault()
                                 setValidation(true)
                             }
-
-                        }
-                        }>
+                        }}>
                             Выложить новость
                         </button>
                     </form >
