@@ -25,20 +25,27 @@ export default function NewsItem({ className, id, title, description, image, use
             <div className={styles.item__type}>
                 {title + ' #' + id}
             </div>
-            <div className={styles.item__wrap}>
-                <div className={styles.item__image}>
-                    {image && <img src={image} className={styles.newsImage} />}
-                    {console.log(image)}
+            {image
+                ?
+                <div className={styles.item__wrap}>
+                    <div className={styles.item__image}>
+                        {image && <img src={image} className={styles.newsImage} />}
+                    </div>
+                    <div className={styles.item__descr}>{description}</div>
                 </div>
+                :
                 <div className={styles.item__descr}>{description}</div>
-            </div>
+            }
             <div className={styles.item__like}
                 onClick={() => likePost({ id, likesCount, setLikesCount, likeActive, setLikeActive })}
             >
                 <img src={likeActive ? iconLikeActive : iconLike} alt="like" />
                 {likesCount}
             </div>
+            {
+                console.log(image)
+            }
             <div className={styles.item__date}> {newTime + ' ' + newDate}</div>
-        </div>
+        </div >
     )
 }
