@@ -4,6 +4,7 @@ import NewsItem from '../NewsItem/NewsItem';
 import { supabase } from '../../supabase'
 import { NavLink } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import memas from '../../assets/memas.webp'
 
 export default function News() {
     const [data, setData] = useState([]);
@@ -88,7 +89,16 @@ export default function News() {
     if (data.length === 0) {
         return (
             <>
-                Постов нет, стань первым на этой неделе! <NavLink to="/create" className={styles.button__add}>Стать первым</NavLink>
+                <div className={styles.news}>
+                    <h1>Дайджест недели</h1>
+                    <div className={styles.news__empty}>
+                        <div>
+                            Постов нет, стань первым на этой неделе!
+                            <NavLink to="/create" className={styles.button__add}>Стать первым</NavLink>
+                        </div>
+                        <img src={memas} alt="" />
+                    </div>
+                </div>
             </>
         );
     }
