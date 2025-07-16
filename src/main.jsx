@@ -4,6 +4,7 @@ import './index.css'
 import './fonts/font.css'
 import { RouterProvider, createBrowserRouter } from 'react-router'
 import Create from './pages/Create.jsx'
+import Memes from './components/Memes/Memes.jsx'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/create',
     element: <Create />
+  },
+  {
+    path: '/memes',
+    element: <Memes />
   }
 ])
 

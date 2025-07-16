@@ -1,0 +1,38 @@
+.header {
+    padding: 30px 0;
+}
+
+.header__wrapper {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.header__nav {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.header__logo {
+    max-width: 200px;
+}
+
+.header__logo img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
+.header__link {
+    font-size: 22px;
+    color: #A0BC00;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .3s;
+    border-bottom: 2px solid transparent;
+}
+
+.header__link:hover {
+    border-bottom: 2px solid #A0BC00;
+}
