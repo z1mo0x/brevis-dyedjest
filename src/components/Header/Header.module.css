@@ -37,3 +37,34 @@
 .header__link:hover {
     border-bottom: 2px solid #A0BC00;
 }
+
+@media (max-width:1200px) {
+    .header {
+        padding: 20px 30px;
+    }
+
+    .header__wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:768px) {
+    .header__link {
+        font-size: 18px;
+        width: max-content;
+    }
+
+    .header__wrapper {
+        grid-template-columns: 100px 1fr;
+    }
+
+    .header__logo {
+        max-width: 100px;
+    }
+
+    .header__nav {
+        gap: 20px;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}

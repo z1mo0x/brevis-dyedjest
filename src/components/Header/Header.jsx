@@ -22,8 +22,8 @@ export default function Header() {
                     <img src={logo} alt="" />
                 </div>
                 <ul className={styles.header__nav}>
-                    {links.map(el =>
-                        <NavLink to={el.link} className={styles.header__link}>{el.title}</NavLink>
+                    {links.map((el, index) =>
+                        <NavLink key={index} to={el.link} className={styles.header__link}>{el.title}</NavLink>
                     )}
                 </ul>
             </div>
