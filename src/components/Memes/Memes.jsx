@@ -12,6 +12,7 @@ export default function Memes() {
     const [customName, setCustomName] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
 
+    const allowedExtensions = ['jpeg', 'jpg', 'png', 'webp', 'mp4'];
 
     useEffect(() => {
         getMemes();
@@ -24,8 +25,14 @@ export default function Memes() {
                 if (item.type.indexOf('image') === 0) {
                     const blob = item.getAsFile();
                     if (blob) {
-                        setFile(blob);
-                        setPreviewUrl(URL.createObjectURL(blob));
+                        // Проверяем расширение pasted файла
+                        const ext = blob.name?.split('.').pop().toLowerCase();
+                        if (ext && allowedExtensions.includes(ext)) {
+                            setFile(blob);
+                            setPreviewUrl(URL.createObjectURL(blob));
+                        } else {
+                            alert('Разрешены только файлы форматов jpeg, jpg, png, webp и mp4');
+                        }
                     }
                 }
             }
@@ -64,23 +71,39 @@ export default function Memes() {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
-        if (selectedFile) {
-            setPreviewUrl(URL.createObjectURL(selectedFile));
+        if (!selectedFile) return;
+
+        const ext = selectedFile.name.split('.').pop().toLowerCase();
+
+        if (!allowedExtensions.includes(ext)) {
+            alert('Разрешены только файлы форматов jpeg, jpg, png, webp и mp4');
+            e.target.value = null; // очистить input
+            setFile(null);
+            setPreviewUrl(null);
+            return;
         }
+
+        setFile(selectedFile);
+        setPreviewUrl(URL.createObjectURL(selectedFile));
     };
 
     const handleUpload = async (e) => {
         e.preventDefault();
         if (!file) return;
 
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        if (!allowedExtensions.includes(ext)) {
+            alert('Разрешены только файлы форматов jpeg, jpg, png, webp и mp4');
+            return;
+        }
+
         setUploading(true);
 
-        const fileExt = file.type.split('/').pop();
         const rawName = customName.trim();
         const fileName = rawName
-            ? `${rawName}.${fileExt}`
-            : `${Date.now()}.${fileExt}`;
+            ? `${rawName}.${ext}`
+            : `${Date.now()}.${ext}`;
 
         const { error } = await supabase.storage
             .from('memes')
@@ -98,11 +121,15 @@ export default function Memes() {
         setUploading(false);
     };
 
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            setSelectedImage(null)
-        }
-    })
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setSelectedImage(null);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     return (
         <div className="container">
@@ -116,10 +143,20 @@ export default function Memes() {
                         {previewUrl && (
                             <div className={styles.preview}>
                                 <p>Твой мем, только не опозорься:</p>
-                                <img src={previewUrl} alt="Preview" />
+                                {/* Для превью видео можно добавить условие */}
+                                {file && ['mp4'].includes(file.name.split('.').pop().toLowerCase()) ? (
+                                    <video src={previewUrl} controls className={styles.memes__thumbnail} />
+                                ) : (
+                                    <img src={previewUrl} alt="Preview" />
+                                )}
                             </div>
                         )}
-                        <input id="imageMem" type="file" accept="image/*" onChange={handleFileChange} />
+                        <input
+                            id="imageMem"
+                            type="file"
+                            accept="image/jpeg,image/jpg,image/png,image/webp,video/mp4"
+                            onChange={handleFileChange}
+                        />
                     </label>
 
                     <input
@@ -135,36 +172,55 @@ export default function Memes() {
                     </button>
                 </form>
 
-
-
-
                 <div className={styles.memes__wrapper}>
                     {loading && <p>Загрузка мемов...</p>}
                     {!loading && images.length === 0 &&
                         <p>Мемов нет, но вы держитесь...</p>
                     }
-                    {!loading && images.map(image => (
-                        <div key={image.name} className={styles.memes__item}>
-                            <img
-                                src={image.url}
-                                alt={image.name}
-                                onClick={() => setSelectedImage(image.url)}
-                                className={styles.memes__thumbnail}
-                            />
-                            <p>{image.name}</p>
-                        </div>
-                    ))}
+                    {!loading && images.map(image => {
+                        const ext = image.name.split('.').pop().toLowerCase();
+                        const isVideo = ['mp4', 'webm', 'ogg'].includes(ext);
 
+                        return (
+                            <div key={image.name} className={styles.memes__item}>
+                                {isVideo ? (
+                                    <video
+                                        src={image.url}
+                                        controls
+                                        className={styles.memes__thumbnail}
+                                        onClick={() => setSelectedImage(image.url)}
+                                    />
+                                ) : (
+                                    <img
+                                        src={image.url}
+                                        alt={image.name}
+                                        onClick={() => setSelectedImage(image.url)}
+                                        className={styles.memes__thumbnail}
+                                    />
+                                )}
+                                <p>{image.name}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
-            {selectedImage && (
-                <div className={styles.modal} onClick={() => setSelectedImage(null)}>
-                    <div className={styles.modal__content} onClick={(e) => e.stopPropagation()}>
-                        <button className={styles.modal__close} onClick={() => setSelectedImage(null)}>×</button>
-                        <img src={selectedImage} alt="Просмотр" />
+            {selectedImage && (() => {
+                const ext = selectedImage.split('.').pop().toLowerCase();
+                const isVideo = ['mp4', 'webm', 'ogg'].includes(ext);
+
+                return (
+                    <div className={styles.modal} onClick={() => setSelectedImage(null)}>
+                        <div className={styles.modal__content} onClick={(e) => e.stopPropagation()}>
+                            <button className={styles.modal__close} onClick={() => setSelectedImage(null)}>×</button>
+                            {isVideo ? (
+                                <video src={selectedImage} controls autoPlay className={styles.modal__media} />
+                            ) : (
+                                <img src={selectedImage} alt="Просмотр" />
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 }
