@@ -186,7 +186,6 @@ export default function Memes() {
                                 {isVideo ? (
                                     <video
                                         src={image.url}
-                                        controls
                                         className={styles.memes__thumbnail}
                                         onClick={() => setSelectedImage(image.url)}
                                     />
