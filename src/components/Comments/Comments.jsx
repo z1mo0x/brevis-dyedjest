@@ -12,8 +12,7 @@ export default function Comments({ postId }) {
 
     useEffect(() => {
         getComments()
-        return;
-    })
+    }, [])
 
     async function getComments() {
         const { data, error } = await supabase
@@ -24,7 +23,7 @@ export default function Comments({ postId }) {
         if (error) {
             console.error('Ошибка получения данных:', error.message);
         } else {
-            setComments(data || [])
+            setComments(data)
         }
     }
 
@@ -40,6 +39,9 @@ export default function Comments({ postId }) {
         if (error) {
             console.error('Ошибка получения данных:', error.message);
         }
+        // else {
+        //     console.log('Комментарий отправлен:' + data);
+        // }
         setIsSending(false)
     }
 
@@ -49,7 +51,7 @@ export default function Comments({ postId }) {
 
     return (
         <div className={styles.comments}>
-            <div className={styles.comments__title} onClick={openComments}>Комментарии ({comments.length})</div>
+            <div className={styles.comments__title} onClick={openComments}>Комментарии({comments.length})</div>
 
             <div className={styles.comments__items} ref={itemsRef}>
                 {comments.map((comment) => { return <CommentItem key={comment.id} text={comment.text} /> })}
