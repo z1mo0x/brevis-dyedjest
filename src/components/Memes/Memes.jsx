@@ -219,7 +219,7 @@ export default function Memes() {
                                 <img src={selectedImage} alt="Просмотр" />
                             )}
                         </div>
-                        <Emojipicker />
+                        {/* <Emojipicker /> */}
                     </div>
                 );
             })()}
