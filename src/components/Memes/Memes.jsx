@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import styles from './Memes.module.css';
 import { supabase } from '../../supabase';
+import EmojiPicker from 'emoji-picker-react';
+import Emojipicker from '../Emojipicker/Emojipicker';
 
 export default function Memes() {
     const [images, setImages] = useState([]);
@@ -217,6 +219,7 @@ export default function Memes() {
                                 <img src={selectedImage} alt="Просмотр" />
                             )}
                         </div>
+                        <Emojipicker />
                     </div>
                 );
             })()}

@@ -3,6 +3,8 @@ import iconLike from '../../assets/heart.svg'
 import iconLikeActive from '../../assets/hearts_active.svg'
 import { useEffect, useState } from 'react'
 import { likePost } from '../../scripts/likes'
+import CommentItem from '../CommentItem/CommentItem'
+import Comments from '../Comments/Comments'
 
 export default function NewsItem({ className, id, title, description, image, user, type, created_at, likes }) {
 
@@ -46,6 +48,7 @@ export default function NewsItem({ className, id, title, description, image, use
                 console.log(image)
             }
             <div className={styles.item__date}> {newTime + ' ' + newDate}</div>
+            <Comments postId={id} />
         </div >
     )
 }
